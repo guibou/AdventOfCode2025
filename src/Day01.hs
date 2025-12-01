@@ -26,26 +26,16 @@ day l = snd $ foldl' (flip f) (50, 0) l
       y' = (y `op` x) `mod` 100
       in (y', if y' == 0 then c + 1 else c)
 
--- * SECOND problem
-day' l = foldl' (flip f) (50, 0) l
-  where
-    f (dir, dy) (y, c) = let
-      op = case dir of
-        R -> (+)
-        L -> (-)
-      y' = (y `op` dy)
-      dc = traceShowId $ abs $ (y `div` 100) - (y' `div` 100)
-      in (y' `mod` 100, (if dir == L && y' `mod` 100 == 0 && y /= 0 then 1 else 0) + dc + c)
-
-day'' l = snd $ go (50, 0) l
+day' l = snd $ go (50, 0) l
   where
     go (pos, count) [] = (pos, count)
     go acc ((_, 0):xs) = go acc xs
-    go (pos, count) ((dir, dx):xs) = let
-       pos' = (pos + case dir of
-         L -> -1
-         R -> 1) `mod` 100
-      in go (pos', if pos' == 0 then count + 1 else count) ((dir, dx - 1):xs)
+    go (pos, count) ((dir, dx):xs) = do
+           let (dc, dx') = dx `divMod` 100
+           let pos' = (pos + case dir of
+                     L -> -dx'
+                     R -> dx')
+           go (pos' `mod` 100, dc + (if (pos' >= 100 || (pos' <= 0 && pos /= 0)) then count + 1 else count)) xs
 
 ex :: [(Direction, Int)]
 ex = parseContent """

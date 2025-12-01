@@ -13,9 +13,9 @@ spec = do
     it "of first star" $ do
       day ex `shouldBe` 3
     it "of second star" $ do
-      day'' ex `shouldBe` 6
+      day' ex `shouldBe` 6
   describe "works" $ do
     it "on first star" $ do
       day fileContent `shouldBe` 1135
     it "on second star" $ do
-      day'' fileContent `shouldBe` 6558
+      day' fileContent `shouldBe` 6558
