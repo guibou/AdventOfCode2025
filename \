@@ -1,0 +1,51 @@
+module Day06 where
+
+import Utils
+import qualified Data.Text as Text
+import Data.List
+
+fileContent = parseContent $(getFile)
+
+parseContent :: Text -> ([[Int]], [Text])
+parseContent t = do
+  let
+    l = Text.lines t
+    cases = map Text.words l
+    numbers = map (map $ read . Text.unpack) $ init cases
+    operations = last cases
+
+  (numbers, operations)
+
+parseContent' :: Text -> ([[Char]], [Text])
+parseContent' t = do
+  let
+    l = Text.lines t
+    values = transpose $ map (read . Text.unpack . Text.strip) $ init l
+    operations = Text.words $ last l
+
+  (values, operations)
+
+-- * Generics
+
+-- * FIRST problem
+day (numbers, op) = do
+  let
+    numbers' = transpose numbers
+  sum (zipWith applyOp numbers' op)
+
+applyOp numbers "*" = product numbers
+applyOp numbers "+" = sum numbers
+
+-- * SECOND problem
+day' = undefined
+
+ex = parseContent' """
+123 328  51 64 
+ 45 64  387 23 
+  6 98  215 314
+*   +   *   + 
+
+"""
+
+-- started at Sat Dec  6 06:58:26 PM +04 2025
+-- first at 18:04
