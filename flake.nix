@@ -13,7 +13,7 @@
             with pkgs.haskell.lib;
             {
 
-              #union-find = unmarkBroken (doJailbreak hprev.union-find);
+              union-find = unmarkBroken (doJailbreak hprev.union-find);
               #  sbv = dontCheck (unmarkBroken (doJailbreak hprev.sbv));
               # sbv = hprev.callHackage "sbv" "13.0" {};
               #memoize = unmarkBroken hprev.memoize;
@@ -63,7 +63,7 @@
           "template-haskell"
           "text"
           "time"
-          #"union-find"
+          "union-find-array"
           "unordered-containers"
           "vector"
           "weigh"
